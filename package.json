@@ -8,13 +8,14 @@
         "postinstall": "tsx cli/install.ts",
         "build": "tsx cli/build.ts",
         "dev": "tsx watch src/index.ts",
-        "start": "node build/index.js"
+        "start": "set NODE_ENV=production&& node build/index.js"
     },
     "author": "MI Sajid",
     "dependencies": {
-        "fastify": "^4.28.0"
+        "express": "^4.19.2",
     },
     "devDependencies": {
+        "@types/express": "^4.17.21",
         "@types/fs-extra": "^11.0.4",
         "@types/node": "^20.14.7",
         "chalk": "^5.3.0",
