@@ -10,12 +10,10 @@
         "dev": "tsx watch src/index.ts",
         "start": "node build/index.js"
     },
-    "keywords": [
-        "watch-together",
-        "youtube"
-    ],
     "author": "MI Sajid",
-    "license": "ISC",
+    "dependencies": {
+        "fastify": "^4.28.0"
+    },
     "devDependencies": {
         "@types/fs-extra": "^11.0.4",
         "@types/node": "^20.14.7",
@@ -31,5 +29,10 @@
     },
     "overrides": {
         "eslint": "^9.5.0"
-    }
+    },
+    "keywords": [
+        "watch-together",
+        "youtube"
+    ],
+    "license": "ISC"
 }
