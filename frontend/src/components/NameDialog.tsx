@@ -17,6 +17,8 @@ export default function NameDialog() {
         if (validate.error) return setError(validate.error.formErrors.formErrors);
         setError(null);
         appStore.setName(name);
+        const i = io as any;
+        i.auth.name = name;
         io.disconnect().connect();
         setIsModalOpen(false);
     }
