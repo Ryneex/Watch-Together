@@ -8,7 +8,8 @@ import { nameValidator } from "./validations/name.validator";
 import { v4 } from "uuid";
 
 io.use((socket, next) => {
-    if (nameValidator.safeParse(socket.handshake.auth.name).error) return next(new Error("Invalid Name"));
+    const validate = nameValidator.safeParse(socket.handshake.auth.name);
+    if (validate.data) socket.name = validate.data;
     next();
 });
 
@@ -16,7 +17,7 @@ io.on("connection", (socket) => {
     socket.emit("rooms", getRoomsWithoutPrivateInfo());
 
     socket.on("create", (name: string) => {
-        if (nameValidator.safeParse(name).error) return;
+        if (nameValidator.safeParse(name).error || !socket.name) return;
         const id = v4();
         rooms.push({
             id,
@@ -30,7 +31,7 @@ io.on("connection", (socket) => {
 
     socket.on("joinRoom", async (id: string) => {
         const room = rooms.find((e) => e.id === id);
-        if (!room) return socket.emit("redirectToHome");
+        if (!room || !socket.name) return socket.emit("redirectToHome");
         removeUserFromRooms(socket);
         room.lastActivity = Date.now();
         await socket.join(id);
@@ -73,4 +74,4 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(3000, () => console.log("Server is running on http://localhost:3000"));
+server.listen(process.env.PORT || 3000, () => console.log("Server is running on http://localhost:3000"));
