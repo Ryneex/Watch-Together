@@ -5,7 +5,7 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 
-app.use("/assets", express.static(path.resolve("build/dist/assets")));
+app.use(express.static(path.resolve("build/dist"), { index: false }));
 
 app.get("/*", (_, res) => {
     if (process.env.NODE_ENV === "production") {
