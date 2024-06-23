@@ -9,3 +9,9 @@ export interface IRoom {
     }[];
     lastActivity: number;
 }
+
+declare module "socket.io" {
+    interface Socket {
+        name: string;
+    }
+}
