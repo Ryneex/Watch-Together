@@ -16,7 +16,8 @@ export default function NameDialog() {
         const validate = nameValidator.safeParse(name);
         if (validate.error) return setError(validate.error.formErrors.formErrors);
         setError(null);
-        appStore.setName(name);
+        appStore.name = name;
+        localStorage.setItem("name", name);
         const i = io as any;
         i.auth.name = name;
         io.disconnect().connect();

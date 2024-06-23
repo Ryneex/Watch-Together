@@ -1,10 +1,10 @@
+import { PublicIRoom } from "@/types";
 import { proxy } from "valtio";
+import { YouTubePlayer } from "youtube-player/dist/types";
 
 export const appStore = proxy({
     name: localStorage.getItem("name") || "",
-    rooms: [],
-    setName(name: string) {
-        this.name = name;
-        localStorage.setItem("name", name);
-    },
+    rooms: [] as PublicIRoom[],
+    player: null as YouTubePlayer | null,
+    showTimestampsInfo: true,
 });
