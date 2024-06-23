@@ -79,6 +79,7 @@ export default function Room() {
         };
     }, []);
 
+    if (!roomInfo) return;
     return (
         <div className="h-full bg-white flex flex-col items-center gap-3 justify-center p-5">
             <div className="max-w-[1000px] w-full flex gap-3 flex-wrap sm:flex-nowrap">
@@ -95,7 +96,7 @@ export default function Room() {
                 <SyncWithDropdown room={roomInfo} />
             </div>
             <div ref={videoContainer} className="aspect-video w-full max-w-[1000px] relative">
-                {!roomInfo?.videoUrl && <div className="absolute w-full h-full flex items-center justify-center bg-slate-800 text-white">Video Url isn't provided</div>}
+                {!roomInfo?.videoUrl && <div className="absolute w-full h-full flex z-10 items-center justify-center bg-slate-800 text-white">Video Url isn't provided</div>}
                 <TimestampsInfo roomInfo={roomInfo} />
                 <div className={`w-full h-full ${!isYTVideo && "hidden"}`}>
                     <div id="vidPlayer" className="w-full h-full"></div>
