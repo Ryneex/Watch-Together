@@ -1,7 +1,6 @@
 import { io } from "@/config/socket";
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
-import { z } from "zod";
 
 export default function VideoUrlForm() {
     const [videoUrlInput, setVideoUrlInput] = useState("");
@@ -9,7 +8,6 @@ export default function VideoUrlForm() {
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                if (z.string().url().safeParse(videoUrlInput).error) return;
                 io.emit("setVideoUrl", videoUrlInput);
             }}
             className="flex w-full max-w-sm gap-3 mr-auto"
