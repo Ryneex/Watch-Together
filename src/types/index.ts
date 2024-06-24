@@ -1,6 +1,7 @@
 export interface IRoom {
     id: string;
     name: string;
+    password: string;
     videoUrl?: string;
     users: {
         socket_id: string;
