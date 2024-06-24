@@ -18,7 +18,7 @@ export default function NewRoomDialog() {
     }
     return (
         <>
-            <Button onPress={() => setIsModalOpen(true)} className="text-sm" size="sm" color="primary">
+            <Button onClick={() => setIsModalOpen(true)} className="text-sm" size="sm" color="primary">
                 New Room
             </Button>
             <Modal isOpen={isModalOpen} onOpenChange={(e) => (setIsModalOpen(e), setError(null))}>

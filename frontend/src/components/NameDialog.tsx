@@ -26,7 +26,7 @@ export default function NameDialog() {
 
     return (
         <>
-            <Button onPress={() => setIsModalOpen(true)} className="rounded-full aspect-square min-w-0 h-9" color="primary">
+            <Button onClick={() => setIsModalOpen(true)} className="rounded-full aspect-square min-w-0 h-9" color="primary">
                 {name.split("")[0]}
             </Button>
             <Modal isOpen={isModalOpen} onOpenChange={(e) => (e ? setIsModalOpen(true) : !nameValidator.safeParse(name).error && (setIsModalOpen(false), setError(null)))}>
