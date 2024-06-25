@@ -68,7 +68,7 @@ export default function Room() {
 
     useEffect(() => {
         const seek = (e: number) => appStore.player?.seekTo(e, true);
-        io.emit("joinRoom", params.id);
+        io.emit("joinRoom", params.id, params.password);
         io.on("roomInfo", setRoomInfo);
         io.on("syncEveryone", seek);
 

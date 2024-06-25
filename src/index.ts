@@ -6,6 +6,7 @@ import { rooms } from "./rooms";
 import { io, server } from "./server";
 import { nameValidator } from "./validations/name.validator";
 import { v4 } from "uuid";
+import { roomFormValidator } from "./validations/roomForm.validator";
 
 io.use((socket, next) => {
     const validate = nameValidator.safeParse(socket.handshake.auth.name);
@@ -16,12 +17,13 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
     socket.emit("rooms", getRoomsWithoutPrivateInfo());
 
-    socket.on("create", (name: string) => {
-        if (nameValidator.safeParse(name).error || !socket.name) return;
+    socket.on("create", (name: string, password: string) => {
+        if (roomFormValidator.safeParse({ name, password }).error || !socket.name) return;
         const id = v4();
         rooms.push({
             id,
-            name: name,
+            name,
+            password,
             lastActivity: Date.now(),
             users: [],
         });
@@ -29,11 +31,16 @@ io.on("connection", (socket) => {
         io.emit("rooms", getRoomsWithoutPrivateInfo());
     });
 
-    socket.on("joinRoom", async (id: string) => {
+    socket.on("checkRoomPassword", (id: string, password) => {
         const room = rooms.find((e) => e.id === id);
-        if (!room || !socket.name) return socket.emit("redirectToHome");
+        if (!room || password !== room.password || !socket.name) return socket.emit("passwordError", "Incorrect Password");
+        socket.emit("redirectTo", id + "/" + password);
+    });
+
+    socket.on("joinRoom", async (id: string, password) => {
+        const room = rooms.find((e) => e.id === id);
+        if (!room || password !== room.password || !socket.name) return socket.emit("redirectTo", "/");
         removeUserFromRooms(socket);
-        room.lastActivity = Date.now();
         await socket.join(id);
         room.lastActivity = Date.now();
         room.users.push({
