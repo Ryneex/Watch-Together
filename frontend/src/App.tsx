@@ -16,7 +16,7 @@ export default function App() {
         <div className="h-screen w-screen bg-slate-100">
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/:id" element={<Room />} />
+                <Route path="/:id/:password" element={<Room />} />
             </Routes>
         </div>
     );
