@@ -9,7 +9,7 @@ export default function App() {
     const navigate = useNavigate();
     useEffect(() => {
         io.on("rooms", (rooms) => (appStore.rooms = rooms));
-        io.on("redirectToHome", () => navigate("/"));
+        io.on("redirectTo", navigate);
     }, []);
 
     return (
