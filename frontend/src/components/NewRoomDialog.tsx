@@ -3,9 +3,11 @@ import { roomFormValidator } from "@/validations/roomForm.validator";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
 
-export default function NewRoomDialog() {
+export default function NewRoomDialog({ setModal }: { setModal: any }) {
     const [error, setError] = useState<{ [key: string]: string[] } | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    setModal.current = setIsModalOpen;
+
     async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
         e?.preventDefault();
         const targets = e?.target as unknown as HTMLInputElement[];
